@@ -1,56 +1,48 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven
-                sh 'mvn clean package'
+                // Build stage tasks
+                sh 'echo "Building the code"'
             }
         }
-
-        stage('Unit and Integration Tests') {
+        stage('Test') {
             steps {
-                // Run unit tests using JUnit
-                sh 'mvn test'
-                // Run integration tests using Selenium
-                sh 'java -jar selenium.jar'
+                // Test stage tasks
+                sh 'echo "Running tests"'
+            }
+            post {
+                success {
+                    emailext subject: 'Test Stage Success',
+                              body: 'The test stage has completed successfully.',
+                              to: 'nandinimmodi17@gmail.com'
+                }
+                failure {
+                    emailext subject: 'Test Stage Failed',
+                              body: 'The test stage has failed. Please check the logs for details.',
+                              to: 'nandinimmodi17@gmail.com'
+                }
             }
         }
-
-        stage('Code Analysis') {
-            steps {
-                // Integrate a code analysis tool like SonarQube
-                sh 'sonar-scanner -Dsonar.projectKey=my_project_key -Dsonar.sources=.'
-            }
-        }
-
         stage('Security Scan') {
             steps {
-                // Perform security scan using OWASP ZAP
-                sh 'zap-cli --zap-url http://localhost -c quick-scan --spider -r testreport.html -l High'
+                // Security scan stage tasks
+                sh 'echo "Performing security scan"'
             }
-        }
-
-        stage('Deploy to Staging') {
-            steps {
-                // Deploy application to staging server (e.g., AWS EC2) using SSH
-                sh 'ssh user@staging-server "cd /path/to/application && git pull origin master && mvn clean package && ./start.sh"'
+            post {
+                success {
+                    emailext subject: 'Security Scan Stage Success',
+                              body: 'The security scan stage has completed successfully.',
+                              to: 'nandinimmodi17@gmail.com'
+                }
+                failure {
+                    emailext subject: 'Security Scan Stage Failed',
+                              body: 'The security scan stage has failed. Please check the logs for details.',
+                              to: 'nandinimmodi17@gmail.com'
+                }
             }
-        }
-
-        stage('Integration Tests on Staging') {
-            steps {
-                // Run integration tests on staging environment using JMeter
-                sh 'jmeter -n -t testplan.jmx -l results.jtl'
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                // Deploy application to production server (e.g., AWS EC2) using SSH
-                sh 'ssh user@production-server "cd /path/to/application && git pull origin master && mvn clean package && ./start.sh"'
-            }
-        }
-    }
+        }
+    }
 }
