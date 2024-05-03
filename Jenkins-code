@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = "/path/to/code"
+        DIRECTORY_PATH = "D:/Sem 2/Professional practice/6.1C"
         TESTING_ENVIRONMENT = "test-env"
-        PRODUCTION_ENVIRONMENT = "production-env"
+        PRODUCTION_ENVIRONMENT = "Nandini"
     }
 
     stages {
@@ -12,8 +12,7 @@ pipeline {
             steps {
                 echo "Fetching the source code from the directory path: ${env.DIRECTORY_PATH} using Maven"
                 echo "Compiling the code and generating necessary artifacts"
-                // Add Maven build step here
-            }
+                }
         }
 
         stage('Unit and Integration Tests') {
@@ -21,29 +20,31 @@ pipeline {
                 echo "Running unit tests"
                 sleep(time: 10, unit: 'SECONDS')
                 echo "Running integration tests"
-                // Add test execution steps here
-            }
+                 }
         }
 
         stage('Code Analysis') {
             steps {
                 echo "Integrating a code analysis tool to analyze the code and ensure it meets industry standards using SonarQube"
-                // Add SonarQube analysis step here
-            }
+                }
         }
 
         stage('Security Scan') {
             steps {
                 echo "Performing a security scan on the code using OWASP ZAP or another security scanning tool"
-                // Add security scanning step here
-            }
+                 }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo "Deploying the application to a staging server in AWS Elastic Beanstalk"
-                // Add deployment to staging step here
-            }
+                 }
+        }
+
+ stage('Deploy to Production') {
+            steps {
+                echo "Deploying the code to production environment: ${env.PRODUCTION_ENVIRONMENT}"
+               }
         }
 
         stage('Integration Tests on Staging') {
@@ -56,25 +57,16 @@ pipeline {
             }
             post {
                 success {
-                    // Archive the build log file as an artifact
-                    archiveArtifacts artifacts: 'build.log', allowEmptyArchive: true
-
-                    // Send notification email for successful pipeline
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
                         body: "The Jenkins pipeline has completed successfully. Please find the build log attached.",
                         to: "nandinimmodi17@gmail.com",
-                        attachmentsPattern: 'build.log' // Attach the build log file to the email
+                        attachmentsPattern: 'build.log' 
                     )
                 }
             }
         }
 
-        stage('Deploy to Production') {
-            steps {
-                echo "Deploying the code to production environment: ${env.PRODUCTION_ENVIRONMENT}"
-                // Add deployment to production step here
-            }
-        }
+       
     }
 }
