@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                // Build the code using Maven
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Unit and Integration Tests') {
+            steps {
+                // Run unit tests using JUnit
+                sh 'mvn test'
+                // Run integration tests using Selenium
+                sh 'java -jar selenium.jar'
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                // Integrate a code analysis tool like SonarQube
+                sh 'sonar-scanner -Dsonar.projectKey=my_project_key -Dsonar.sources=.'
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                // Perform security scan using OWASP ZAP
+                sh 'zap-cli --zap-url http://localhost -c quick-scan --spider -r testreport.html -l High'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                // Deploy application to staging server (e.g., AWS EC2) using SSH
+                sh 'ssh user@staging-server "cd /path/to/application && git pull origin master && mvn clean package && ./start.sh"'
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                // Run integration tests on staging environment using JMeter
+                sh 'jmeter -n -t testplan.jmx -l results.jtl'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                // Deploy application to production server (e.g., AWS EC2) using SSH
+                sh 'ssh user@production-server "cd /path/to/application && git pull origin master && mvn clean package && ./start.sh"'
+            }
+        }
+    }
+}
