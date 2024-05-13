@@ -55,7 +55,7 @@ pipeline {
              success {
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
-                        body: "The security scan has completed successfully! Go further...",
+                        body: "The security scan has completed successfully!",
                         to: "nandinimmodi17@gmail.com",
                         attachmentsPattern: 'build.log' 
                     )
