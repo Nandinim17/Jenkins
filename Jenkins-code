@@ -25,7 +25,7 @@ pipeline {
              success {
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
-                        body: "The unit and integration test has completed successfully",
+                        body: "The unit and integration test has completed successfully. see the attachments below.",
                         to: "nandinimmodi17@gmail.com",
                         attachmentsPattern: 'build.log' 
                     )
@@ -33,7 +33,7 @@ pipeline {
                 failure{
                     emailext (
                         subject: "Pipeline Status: FAILURE",
-                        body: "The unit and integration test has not completed successfully!!!",
+                        body: "The unit and integration test has not completed successfully.. Try again...",
                         to: "nandinimmodi17@gmail.com",
                         attachLog: ture 
                     )
@@ -55,7 +55,7 @@ pipeline {
              success {
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
-                        body: "The security scan has completed successfully!",
+                        body: "The security scan has completed successfully! Go further...",
                         to: "nandinimmodi17@gmail.com",
                         attachmentsPattern: 'build.log' 
                     )
