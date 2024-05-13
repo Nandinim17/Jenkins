@@ -55,7 +55,7 @@ pipeline {
              success {
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
-                        body: "The security scan has completed successfully!!!!!",
+                        body: "The security scan has completed successfully!",
                         to: "nandinimmodi17@gmail.com",
                         attachmentsPattern: 'build.log' 
                     )
@@ -63,7 +63,7 @@ pipeline {
                 failure{
                     emailext (
                         subject: "Pipeline Status: FAILURE",
-                        body: "The security scan has not completed successfully.....",
+                        body: "The security scan has not completed successfully.",
                         to: "nandinimmodi17@gmail.com",
                         attachLog: ture 
                     )
