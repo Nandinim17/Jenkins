@@ -25,7 +25,7 @@ pipeline {
              success {
                     emailext (
                         subject: "Pipeline Status: SUCCESS",
-                        body: "The unit and integration test has completed successfully. ",
+                        body: "The unit and integration test has completed successfully. Go for security scan... ",
                         to: "nandinimmodi17@gmail.com",
                         attachmentsPattern: 'build.log' 
                     )
