@@ -35,7 +35,7 @@ pipeline {
                         subject: "Pipeline Status: FAILURE",
                         body: "The unit and integration test has not completed successfully.",
                         to: "nandinimmodi17@gmail.com",
-                        attachlog: ture 
+                        attachLog: ture 
                     )
             }
         }
@@ -65,7 +65,7 @@ pipeline {
                         subject: "Pipeline Status: FAILURE",
                         body: "The security scan has not completed successfully.",
                         to: "nandinimmodi17@gmail.com",
-                        attachlog: ture 
+                        attachLog: ture 
                     )
             }
         }
